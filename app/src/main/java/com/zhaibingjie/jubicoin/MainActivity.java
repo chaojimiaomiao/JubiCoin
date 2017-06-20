@@ -22,13 +22,14 @@ import java.util.ArrayList;
 
 public class MainActivity extends Activity implements View.OnClickListener {
     final static int INTERVAL = 1500;
-    final static int INTERVAL2 = 1000 * 60 *1;
-    final static int STAR = 1000 * 10 *1;
-    Button startBtn, stopBtn, backBtn;
+    final static int INTERVAL2 = 1000 * 60 *1;//一分钟
+    final static int STAR_INTERVAL = 1000 * 10 *1;//10s
+    Button startBtn, stopBtn, backBtn, starBtn;
     ListView listView;
     //SimpleAdapter simpleAdapter;
     MyAdapter myAdapter;
     boolean isStop, isStop2;
+    int nowInterval = 1000;
 
     LinearLayout backHint;
     TextView diefu, zhangfu;
@@ -54,7 +55,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
             //要做的事情
             if (!isStop2) {
                 getAllTicker();
-                handler2.postDelayed(this, INTERVAL2);
+                handler2.postDelayed(this, nowInterval);
             }
         }
     };
@@ -64,6 +65,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        starBtn = (Button) findViewById(R.id.main_star);
         startBtn = (Button) findViewById(R.id.main_start);
         stopBtn = (Button) findViewById(R.id.main_stop);
         backBtn = (Button) findViewById(R.id.main_background);
@@ -75,6 +77,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
         startBtn.setOnClickListener(this);
         stopBtn.setOnClickListener(this);
         backBtn.setOnClickListener(this);
+        starBtn.setOnClickListener(this);
     }
 
     @Override
@@ -93,6 +96,12 @@ public class MainActivity extends Activity implements View.OnClickListener {
                 handler2.removeCallbacks(runnable2);
                 break;
             case R.id.main_background:
+                nowInterval = INTERVAL2;
+                handler2.post(runnable2);
+                break;
+            case R.id.main_star:
+                nowInterval = STAR_INTERVAL;
+                initLeiji();
                 handler2.post(runnable2);
                 break;
         }
@@ -114,6 +123,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
 
     private ArrayList<Float> lstPrice = new ArrayList<>();
     private ArrayList<Float> nowPrice = new ArrayList<>();
+    private ArrayList<Float> leijiPrice = new ArrayList<>();
     int lstNum = 0;
 
     private void getAllTicker() {//后台调用，不显示到主界面，仅显示提示
@@ -139,10 +149,12 @@ public class MainActivity extends Activity implements View.OnClickListener {
                                 addNowPrice(ticker);
                                 for (int i=0; i < nowPrice.size(); i++) {
                                     float wt = (nowPrice.get(i) - lstPrice.get(i)) /lstPrice.get(i);
+                                    leijiPrice.add(leijiPrice.get(i) + wt);
                                     if (wt > 0.01) {//百分之一
-                                        zhangfu.setText(zhangfu.getText() + ticker.nameMaps.get(i) + "：涨幅为"+ wt*100 + "%\n");
+                                        zhangfu.setText(zhangfu.getText() + ticker.nameMaps.get(i) + "：涨幅为"+ wt*100 +
+                                                "%，累计：" + leijiPrice.get(i)*100 +"%\n");
                                     } else if (wt < -0.01) {
-                                        diefu.setText(diefu.getText() + ticker.nameMaps.get(i) + "：跌幅为"+ wt*100 + "%\n");
+                                        //diefu.setText(diefu.getText() + ticker.nameMaps.get(i) + "：跌幅为"+ wt*100 + "%\n");
                                     }
                                 }
                             }
@@ -359,5 +371,11 @@ public class MainActivity extends Activity implements View.OnClickListener {
         lstPrice.add(ticker.doge.last);
         lstPrice.add(ticker.eac.last);
         lstPrice.add(ticker.ifc.last);
+    }
+
+    private void initLeiji() {
+        for (int i = 0; i < 43; i++) {
+            leijiPrice.add(0f);
+        }
     }
 }
