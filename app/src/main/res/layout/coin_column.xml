@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="30dp"
+    android:orientation="horizontal"
+    android:paddingLeft="2dp">
+
+    <TextView
+        android:id="@+id/coin_name"
+        android:text="名称"
+        android:gravity="center_vertical"
+        android:layout_weight="1"
+        android:layout_width="0dp"
+        android:layout_height="match_parent" />
+
+    <TextView
+        android:id="@+id/coin_price"
+        android:text="价格"
+        android:gravity="center_vertical"
+        android:layout_weight="1"
+        android:layout_width="0dp"
+        android:layout_height="match_parent" />
+
+    <TextView
+        android:id="@+id/coin_vibrate"
+        android:text="幅度"
+        android:gravity="center_vertical"
+        android:layout_weight="1"
+        android:layout_width="0dp"
+        android:layout_height="match_parent" />
+
+</LinearLayout>

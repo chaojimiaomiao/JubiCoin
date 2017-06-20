@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="5dp"
+    tools:context="com.zhaibingjie.jubicoin.MainActivity">
+
+    <Button
+        android:id="@+id/main_start"
+        android:text="开始"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <Button
+        android:id="@+id/main_stop"
+        android:layout_alignParentRight="true"
+        android:text="停止"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:id="@+id/main_background"
+        android:layout_centerHorizontal="true"
+        android:text="后台模式"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <ListView
+        android:layout_below="@id/main_start"
+        android:id="@+id/coin_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    </ListView>
+
+    <ScrollView
+        android:paddingTop="10dp"
+        android:layout_below="@id/main_start"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:id="@+id/back_hint"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:text="一分钟内跌幅提示："
+                android:layout_width="match_parent"
+                android:layout_height="30dp" />
+
+            <TextView
+                android:id="@+id/main_diefu"
+                android:text=""
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:text="一分钟内涨幅提示："
+                android:layout_width="match_parent"
+                android:layout_height="30dp" />
+
+            <TextView
+                android:id="@+id/main_zhangfu"
+                android:text=""
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+    </ScrollView>
+
+</RelativeLayout>
