@@ -22,7 +22,7 @@ import java.util.ArrayList;
 
 public class MainActivity extends Activity implements View.OnClickListener {
     final static int INTERVAL = 1500;
-    final static int INTERVAL2 = 1000 * 60 *1;//一分钟
+    final static int INTERVAL2 = 1000 * 60 * 1;//一分钟
     final static int STAR_INTERVAL = 1000 * 10 *1;//10s
     Button startBtn, stopBtn, backBtn, starBtn;
     ListView listView;
@@ -97,6 +97,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
                 break;
             case R.id.main_background:
                 nowInterval = INTERVAL2;
+                initLeiji();
                 handler2.post(runnable2);
                 break;
             case R.id.main_star:
@@ -149,13 +150,24 @@ public class MainActivity extends Activity implements View.OnClickListener {
                                 addNowPrice(ticker);
                                 for (int i=0; i < nowPrice.size(); i++) {
                                     float wt = (nowPrice.get(i) - lstPrice.get(i)) /lstPrice.get(i);
-                                    leijiPrice.add(leijiPrice.get(i) + wt);
-                                    if (wt > 0.01) {//百分之一
-                                        zhangfu.setText(zhangfu.getText() + ticker.nameMaps.get(i) + "：涨幅为"+ wt*100 +
-                                                "%，累计：" + leijiPrice.get(i)*100 +"%\n");
-                                    } else if (wt < -0.01) {
-                                        //diefu.setText(diefu.getText() + ticker.nameMaps.get(i) + "：跌幅为"+ wt*100 + "%\n");
+                                    leijiPrice.set(i, leijiPrice.get(i) + wt);
+                                    if (nowInterval == STAR_INTERVAL) {
+                                        if (wt > 0.01) {//百分之一
+                                            zhangfu.setText(zhangfu.getText() + ticker.nameMaps.get(i) + "：涨幅为"+ wt*100 +
+                                                    "%，累计：" + leijiPrice.get(i)*100 +"%\n");
+                                        } else if (wt < -0.01) {
+                                            //diefu.setText(diefu.getText() + ticker.nameMaps.get(i) + "：跌幅为"+ wt*100 + "%\n");
+                                        }
+                                    } else if (nowInterval == INTERVAL2)  {
+                                        if (leijiPrice.get(i) > 0.05) {
+                                            zhangfu.setText(zhangfu.getText() + ticker.nameMaps.get(i)+
+                                                    "  累计：" + leijiPrice.get(i)*100 +"%\n");
+                                        } else if (leijiPrice.get(i) < -0.05)  {
+                                            diefu.setText(diefu.getText() + ticker.nameMaps.get(i) +
+                                                    "  累计：" + leijiPrice.get(i)*100 +"%\n");
+                                        }
                                     }
+
                                 }
                             }
                             Log.e("MainActivity", "" + ticker);
