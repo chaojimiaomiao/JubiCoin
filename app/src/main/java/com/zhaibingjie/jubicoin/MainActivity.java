@@ -20,11 +20,18 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+/**
+ * 共三种模式
+ * 追星模式，只看涨幅和累计
+ * 震荡模式，看短时间内跌幅和涨幅（若有波段可从中获利）
+ * 后台模式，只看累计涨幅
+ */
 public class MainActivity extends Activity implements View.OnClickListener {
     final static int INTERVAL = 1500;
-    final static int INTERVAL2 = 1000 * 60 * 1;//一分钟
+    final static int INTERVAL_ONEMINUTE = 1000 * 60 * 1;//一分钟
+    final static int INTERVAL_TWOMINUTE = 1500 * 60;//震荡
     final static int STAR_INTERVAL = 1000 * 10 *1;//10s
-    Button startBtn, stopBtn, backBtn, starBtn;
+    Button startBtn, stopBtn, backBtn, starBtn, vibrateBtn;
     ListView listView;
     //SimpleAdapter simpleAdapter;
     MyAdapter myAdapter;
@@ -69,6 +76,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
         startBtn = (Button) findViewById(R.id.main_start);
         stopBtn = (Button) findViewById(R.id.main_stop);
         backBtn = (Button) findViewById(R.id.main_background);
+        vibrateBtn = (Button) findViewById(R.id.main_vibrate);
         listView = (ListView) findViewById(R.id.coin_list);
         backHint = (LinearLayout) findViewById(R.id.back_hint);
         diefu = (TextView) findViewById(R.id.main_diefu);
@@ -78,6 +86,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
         stopBtn.setOnClickListener(this);
         backBtn.setOnClickListener(this);
         starBtn.setOnClickListener(this);
+        vibrateBtn.setOnClickListener(this);
     }
 
     @Override
@@ -96,12 +105,17 @@ public class MainActivity extends Activity implements View.OnClickListener {
                 handler2.removeCallbacks(runnable2);
                 break;
             case R.id.main_background:
-                nowInterval = INTERVAL2;
+                nowInterval = INTERVAL_ONEMINUTE;
                 initLeiji();
                 handler2.post(runnable2);
                 break;
             case R.id.main_star:
                 nowInterval = STAR_INTERVAL;
+                initLeiji();
+                handler2.post(runnable2);
+                break;
+            case R.id.main_vibrate:
+                nowInterval = INTERVAL_TWOMINUTE;
                 initLeiji();
                 handler2.post(runnable2);
                 break;
@@ -158,13 +172,20 @@ public class MainActivity extends Activity implements View.OnClickListener {
                                         } else if (wt < -0.01) {
                                             //diefu.setText(diefu.getText() + ticker.nameMaps.get(i) + "：跌幅为"+ wt*100 + "%\n");
                                         }
-                                    } else if (nowInterval == INTERVAL2)  {
+                                    } else if (nowInterval == INTERVAL_ONEMINUTE)  {
                                         if (leijiPrice.get(i) > 0.05) {
                                             zhangfu.setText(zhangfu.getText() + ticker.nameMaps.get(i)+
                                                     "  累计：" + leijiPrice.get(i)*100 +"%\n");
                                         } else if (leijiPrice.get(i) < -0.05)  {
                                             diefu.setText(diefu.getText() + ticker.nameMaps.get(i) +
                                                     "  累计：" + leijiPrice.get(i)*100 +"%\n");
+                                        }
+                                    } else if (nowInterval == INTERVAL_TWOMINUTE)  {
+                                        if (wt > 0.015) {//百分之一
+                                            zhangfu.setText(zhangfu.getText() + ticker.nameMaps.get(i) + "：涨幅为"+ wt*100 +
+                                                    "%，累计：" + leijiPrice.get(i)*100 +"%\n");
+                                        } else if (wt < -0.015) {
+                                            diefu.setText(diefu.getText() + ticker.nameMaps.get(i) + "：跌幅为"+ wt*100 + "%\n");
                                         }
                                     }
 

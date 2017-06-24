@@ -15,6 +15,7 @@
         <Button
             android:id="@+id/main_start"
             android:text="开始"
+            android:visibility="gone"
             android:layout_weight="1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
@@ -31,6 +32,14 @@
             android:id="@+id/main_star"
             android:layout_centerHorizontal="true"
             android:text="追星模式"
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:id="@+id/main_vibrate"
+            android:layout_centerHorizontal="true"
+            android:text="震荡模式"
             android:layout_weight="1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
