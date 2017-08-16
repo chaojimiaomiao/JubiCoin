@@ -52,6 +52,16 @@ public class CoinTicker implements Serializable {
     TickerPrice doge;
     TickerPrice eac;
     TickerPrice ifc;
+    TickerPrice hcc;
+    TickerPrice btm;
+    TickerPrice elc;
+    TickerPrice btk;
+    TickerPrice ico;
+    TickerPrice ugt;
+    TickerPrice qtum;
+    TickerPrice bcc;
+    TickerPrice eos;
+    TickerPrice tic;
 
     public CoinTicker() {
         initKeys();
@@ -102,6 +112,17 @@ public class CoinTicker implements Serializable {
         nameMaps.add("狗狗");
         nameMaps.add("地球");
         nameMaps.add("无限");
+
+        nameMaps.add("医疗");
+        nameMaps.add("比原");
+        nameMaps.add("选举");
+        nameMaps.add("b-token");
+        nameMaps.add("ico币");
+        nameMaps.add("ug token");
+        nameMaps.add("量子");
+        nameMaps.add("bcc");
+        nameMaps.add("eos");
+        nameMaps.add("钛币");
     }
 
 }

@@ -205,6 +205,8 @@ public class MainActivity extends Activity implements View.OnClickListener {
         ParamFactory.getVolley(this).add(jsonRequest);
     }
 
+    private int coinSize = 53;
+
     private void getAllPrices() {//按价格排序,43个
         getTicker("btc", 0);
         getTicker("eth", 1);
@@ -249,17 +251,28 @@ public class MainActivity extends Activity implements View.OnClickListener {
         getTicker("doge", 40);
         getTicker("eac", 41);
         getTicker("ifc", 42);
+
+        getTicker("hcc", 43);
+        getTicker("btm", 44);
+        getTicker("elc", 45);
+        getTicker("btk", 46);
+        getTicker("ico", 47);
+        getTicker("ugt", 48);
+        getTicker("qtum", 49);
+        getTicker("bcc", 50);
+        getTicker("eos", 51);
+        getTicker("tic", 52);
     }
 
     private void initList() {
         coins.clear();
-        for (int i =0; i < 43; i++) {
+        for (int i =0; i < coinSize; i++) {
             coins.add(new CoinPrice());
         }
     }
     private void initLastList() {
         lastcoins.clear();
-        for (int i =0; i < 43; i++) {
+        for (int i =0; i < coinSize; i++) {
             lastcoins.add(new CoinPrice());
         }
     }
@@ -276,7 +289,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
                             CoinPrice price = gson.fromJson(response.toString(), CoinPrice.class);
                             price.name = coinName;
                             if (cishu == 0) {
-                                if (coinNum < 43) {
+                                if (coinNum < coinSize) {
                                     lastcoins.set(seq, price);
                                     coinNum ++;
                                 } else {
@@ -285,7 +298,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
                                     coins.set(seq, price);
                                 }
                             } else {
-                                if (coinNum < 43) {
+                                if (coinNum < coinSize) {
                                     coins.set(seq, price);
                                     coinNum ++;
                                 } else {
@@ -358,6 +371,17 @@ public class MainActivity extends Activity implements View.OnClickListener {
         nowPrice.add(ticker.doge.last);
         nowPrice.add(ticker.eac.last);
         nowPrice.add(ticker.ifc.last);
+
+        nowPrice.add(ticker.hcc.last);
+        nowPrice.add(ticker.btm.last);
+        nowPrice.add(ticker.elc.last);
+        nowPrice.add(ticker.btk.last);
+        nowPrice.add(ticker.ico.last);
+        nowPrice.add(ticker.ugt.last);
+        nowPrice.add(ticker.qtum.last);
+        nowPrice.add(ticker.bcc.last);
+        nowPrice.add(ticker.eos.last);
+        nowPrice.add(ticker.tic.last);
     }
 
     private void addLstPrice(CoinTicker ticker) {
@@ -404,10 +428,21 @@ public class MainActivity extends Activity implements View.OnClickListener {
         lstPrice.add(ticker.doge.last);
         lstPrice.add(ticker.eac.last);
         lstPrice.add(ticker.ifc.last);
+
+        lstPrice.add(ticker.hcc.last);
+        lstPrice.add(ticker.btm.last);
+        lstPrice.add(ticker.elc.last);
+        lstPrice.add(ticker.btk.last);
+        lstPrice.add(ticker.ico.last);
+        lstPrice.add(ticker.ugt.last);
+        lstPrice.add(ticker.qtum.last);
+        lstPrice.add(ticker.bcc.last);
+        lstPrice.add(ticker.eos.last);
+        lstPrice.add(ticker.tic.last);
     }
 
     private void initLeiji() {
-        for (int i = 0; i < 43; i++) {
+        for (int i = 0; i < coinSize; i++) {
             leijiPrice.add(0f);
         }
     }
